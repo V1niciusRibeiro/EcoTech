@@ -8,8 +8,8 @@ class NavBarViewModel {
     private val _menuOpen = MutableLiveData<Boolean>()
     val menuOpen: LiveData<Boolean> = _menuOpen
 
-    fun onMenuOpenChanged(openMenu: Boolean) {
-        _menuOpen.value = openMenu
+    fun onMenuOpenChanged(menuOpen: Boolean) {
+        _menuOpen.value = menuOpen
     }
 
 }

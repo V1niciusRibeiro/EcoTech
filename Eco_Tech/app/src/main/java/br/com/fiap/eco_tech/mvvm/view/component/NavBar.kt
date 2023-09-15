@@ -60,7 +60,7 @@ fun NavBar(navController: NavController, navBarViewModel: NavBarViewModel) {
             }
         }
         if (menuOpen) {
-            SubMenu(navController)
+            SubMenu(navController,navBarViewModel,menuOpen)
         }
     }
 
@@ -89,7 +89,7 @@ fun BarsButton() {
 }
 
 @Composable
-fun SubMenu(navController: NavController) {
+fun SubMenu(navController: NavController, navBarViewModel: NavBarViewModel, menuOpen: Boolean) {
 
     val context = LocalContext.current
     val menuItems = MenuItems.listItems(context)
@@ -112,6 +112,7 @@ fun SubMenu(navController: NavController) {
                     modifier = Modifier
                         .padding(bottom = 25.dp)
                         .clickable {
+                            navBarViewModel.onMenuOpenChanged(!menuOpen)
                             navController.navigate(item.route)
                         }
                 )

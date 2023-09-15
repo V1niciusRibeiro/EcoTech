@@ -12,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import br.com.fiap.eco_tech.database.repository.PostRepository
 import br.com.fiap.eco_tech.database.repository.UserRepository
+import br.com.fiap.eco_tech.mvvm.model.Post
 import br.com.fiap.eco_tech.mvvm.model.User
 import br.com.fiap.eco_tech.mvvm.view.component.NavBar
 import br.com.fiap.eco_tech.mvvm.view_model.NavBarViewModel
@@ -29,6 +31,21 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
+                    val user = User(0,"teste","login","password")
+                    val userDB = UserRepository(this)
+                    if(userDB.getById(1) == null) {
+                        userDB.post(user)
+                    }
+
+                    val postDB = PostRepository(this)
+                    for(i in 1..10){
+                        var post = Post(0,"Post $i","Description $i","R")
+                        if (postDB.getById(i) == null) {
+                            postDB.post(post)
+                        }
+                    }
+
                     MainPage()
                 }
             }

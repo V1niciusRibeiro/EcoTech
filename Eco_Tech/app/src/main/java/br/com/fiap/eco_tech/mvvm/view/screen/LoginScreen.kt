@@ -46,6 +46,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.fiap.eco_tech.R
+import br.com.fiap.eco_tech.mvvm.view.component.DefaultButton
+import br.com.fiap.eco_tech.mvvm.view.component.DefaultInput
 
 
 @Composable
@@ -121,83 +123,49 @@ fun LoginScreen(navcControler : NavController) {
                             textAlign = TextAlign.Center
                         )
                         Spacer(modifier = Modifier.height(32.dp))
-                        Text(
-                            text = "Login",
-                            modifier = Modifier.padding(bottom = 8.dp),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = colorResource(id = R.color.theme)
-                        )
-                        OutlinedTextField(
-                            trailingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email")},
-                            value = usuario,
-                            onValueChange = {
-                                usuario = it
-                            },
+                        DefaultInput(
                             modifier = Modifier.fillMaxWidth(),
-                            placeholder = {
-                                Text(text = "Digite o usuário")
-                            },
-                            colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedBorderColor = colorResource(id = R.color.theme),
-                                focusedBorderColor = colorResource(id = R.color.theme)
-                            ),
-                            shape = RoundedCornerShape(16.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            maxLines = 1
+                            label = "Login",
+                            placeholder = "Digite o Usuário",
+                            icon = Icons.Default.Email,
+                            iconDescription = "Login",
+                            value = "a",
+                            keyboardType = KeyboardType.Email,
+                            maxLines = 1,
+                            onValueChange = {
 
+                            }
                         )
                         Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            text = "Senha",
-                            modifier = Modifier.padding(bottom = 8.dp),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = colorResource(id = R.color.theme)
-                        )
-                        OutlinedTextField(
-                            trailingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Senha")},
-                            value = senha,
-                            onValueChange = {
-                                senha = it
-                            },
+                        DefaultInput(
                             modifier = Modifier.fillMaxWidth(),
-                            placeholder = {
-                                Text(
-                                    text = "Digite a senha"
-                                )
-                            },
-                            colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedBorderColor = colorResource(id = R.color.theme),
-                                focusedBorderColor = colorResource(id = R.color.theme)
-                            ),
-                            shape = RoundedCornerShape(16.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            maxLines = 1
+                            label = "Senha",
+                            placeholder = "Digite a Senha",
+                            icon = Icons.Default.Lock,
+                            iconDescription = "Senha",
+                            value = "a",
+                            keyboardType = KeyboardType.Password,
+                            maxLines = 1,
+                            onValueChange = {
+
+                            }
                         )
-                        Spacer(modifier = Modifier.height(74.dp))
-                        Button(
-                            onClick = {
-                                navcControler.navigate("index")
-                            },
+                        Spacer(modifier = Modifier.height(65.dp))
+                        DefaultButton(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(65.dp),
-
-                            shape = RoundedCornerShape(16.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.theme))
+                            text = "Entrar",
+                            textSize = 16
                         ) {
-                            Text(
-                                text = "Entrar",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White,
-                                fontSize = 18.sp
-
-                            )
+                            navcControler.navigate("index")
                         }
                         Text(
                             text = "Esqueci minha senha",
-                            modifier = Modifier.padding(bottom = 8.dp, end = 5.dp, top = 2.dp) .clickable{} .align(Alignment.End),
+                            modifier = Modifier
+                                .padding(bottom = 8.dp, end = 5.dp, top = 2.dp)
+                                .clickable {}
+                                .align(Alignment.End),
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color(0xFF074D09)

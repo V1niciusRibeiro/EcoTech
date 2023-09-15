@@ -12,19 +12,19 @@ class PostRepository(context: Context) {
         return db.post(post)
     }
 
-    fun atualizar(post: Post): Int {
+    fun put(post: Post): Int {
         return db.put(post)
     }
 
-    fun excluir(post: Post): Int {
+    fun delete(post: Post): Int {
         return db.delete(post)
     }
 
-    fun listarContatos(): List<Post> {
+    fun getAll(): List<Post> {
         return db.getAll()
     }
 
-    fun buscarContatoPeloId(id: Int): Post {
+    fun getById(id: Int): Post {
         return db.getById(id)
     }
 
