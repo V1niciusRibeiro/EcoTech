@@ -41,7 +41,7 @@ fun DefaultInput(
     OutlinedTextField(
         trailingIcon = { Icon(imageVector = icon, contentDescription = iconDescription)},
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = {onValueChange(it)},
         modifier = modifier,
         placeholder = {
             Text(

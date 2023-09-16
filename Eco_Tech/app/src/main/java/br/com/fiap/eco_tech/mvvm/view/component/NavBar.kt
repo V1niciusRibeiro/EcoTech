@@ -1,5 +1,6 @@
 package br.com.fiap.eco_tech.mvvm.view.component
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,6 +24,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -34,11 +38,12 @@ import br.com.fiap.eco_tech.mvvm.view_model.NavBarViewModel
 fun NavBar(navController: NavController, navBarViewModel: NavBarViewModel) {
 
     val menuOpen by navBarViewModel.menuOpen.observeAsState(initial = false)
+    val context = LocalContext.current
 
     Column {
         Row(
             modifier = Modifier
-                .background(Color(0xFF3DD7B7))
+                .background(Color(context.getColor(R.color.theme)))
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -60,7 +65,7 @@ fun NavBar(navController: NavController, navBarViewModel: NavBarViewModel) {
             }
         }
         if (menuOpen) {
-            SubMenu(navController,navBarViewModel,menuOpen)
+            SubMenu(navController, navBarViewModel, menuOpen, context)
         }
     }
 
@@ -70,18 +75,22 @@ fun NavBar(navController: NavController, navBarViewModel: NavBarViewModel) {
 fun BarsButton() {
 
     Column(
+        verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .width(55.dp)
             .height(40.dp)
-            .border(width = 1.dp, color = Color(0xBFFFFFFF)),
-        verticalArrangement = Arrangement.SpaceEvenly
+            .border(
+                width = 1.dp,
+                color = Color.White,
+                shape = RoundedCornerShape(5.dp)
+            )
     ) {
         repeat(3) {
             Box(
                 modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
                     .size(20.dp, 2.dp)
-                    .background(Color(0xBFFFFFFF))
+                    .background(Color.White)
+                    .align(Alignment.CenterHorizontally)
             )
         }
     }
@@ -89,14 +98,18 @@ fun BarsButton() {
 }
 
 @Composable
-fun SubMenu(navController: NavController, navBarViewModel: NavBarViewModel, menuOpen: Boolean) {
+fun SubMenu(
+    navController: NavController,
+    navBarViewModel: NavBarViewModel,
+    menuOpen: Boolean,
+    context: Context
+) {
 
-    val context = LocalContext.current
     val menuItems = MenuItems.listItems(context)
 
     Column(
         modifier = Modifier
-            .background(Color(0xFF3dd7b7))
+            .background(Color(context.getColor(R.color.theme)))
             .fillMaxWidth(),
         horizontalAlignment = Alignment.End
     ) {
@@ -104,16 +117,16 @@ fun SubMenu(navController: NavController, navBarViewModel: NavBarViewModel, menu
             modifier = Modifier.padding(end = 20.dp, top = 10.dp),
             horizontalAlignment = Alignment.End
         ) {
-            menuItems.forEach { item ->
+            menuItems.forEach {
                 Text(
-                    text = item.name,
+                    text = it.name,
                     color = Color.White,
                     fontSize = 18.sp,
                     modifier = Modifier
                         .padding(bottom = 25.dp)
                         .clickable {
                             navBarViewModel.onMenuOpenChanged(!menuOpen)
-                            navController.navigate(item.route)
+                            navController.navigate(it.route)
                         }
                 )
             }

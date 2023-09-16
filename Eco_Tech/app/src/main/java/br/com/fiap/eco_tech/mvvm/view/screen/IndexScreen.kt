@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,155 +31,73 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.eco_tech.R
+import br.com.fiap.eco_tech.mvvm.view.component.IndexCard
+import br.com.fiap.eco_tech.navigation.AppRoutes
 
 @Composable
-fun IndexScreen() {
+fun IndexScreen(navController: NavController) {
 
-    Box() {
+    val context = LocalContext.current
+
+    Box(modifier = Modifier.background(colorResource(id = R.color.light_green))) {
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
-                .background(colorResource(id = R.color.verde)),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(32.dp, 16.dp)
+                .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = "Bem-vindo à Plataforma de Conscientização Alimentar",
+                text = context.getString(R.string.index_title),
+                textAlign = TextAlign.Center,
                 fontSize = 26.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF333333),
-                modifier = Modifier.padding(bottom = 20.dp),
-                textAlign = TextAlign.Center
-
+                color = Color.Black,
+                modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(10.dp))
+
             Text(
-                text = "Explore nossas categorias de conteúdo:",
+                text = context.getString(R.string.index_subtitle),
+                textAlign = TextAlign.Center,
                 fontSize = 18.sp,
-                color = Color(0xFF333333),
-                modifier = Modifier.padding(bottom = 20.dp)
+                color = Color.Black,
+                modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Card(
-                //shape = MaterialTheme.shapes.medium,
-                shape = RoundedCornerShape(8.dp),
-                // modifier = Modifier.size(280.dp, 240.dp)
-                modifier = Modifier
-                    .padding(10.dp, 5.dp, 10.dp, 10.dp)
-                    .size(300.dp, 200.dp),
-                //set card elevation of the card
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 10.dp,
-                ),
-                colors = CardDefaults.cardColors(
-                    containerColor = colorResource(id = R.color.theme),
-                ),
-            ) {
-                Column(modifier = Modifier.clickable(onClick = { })) {
+            Spacer(modifier = Modifier.height(20.dp))
 
-                    Image(
-                        painter = painterResource(R.drawable.blog),
-                        contentDescription = "", // decorative
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .height(150.dp)
-                            .fillMaxWidth()
-                    )
-
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "BLOG",
-                            style = MaterialTheme.typography.titleMedium,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis
-                        )
-
-                        Spacer(modifier = Modifier.height(5.dp))
-
-                    }
+            IndexCard(
+                context.getString(R.string.index_blog),
+                painterResource(id = R.drawable.blog),
+                Color(context.getColor(R.color.green)),
+                onClick = {
+                    navController.navigate(AppRoutes.BLOG_ROUTE)
                 }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            Card(
-                //shape = MaterialTheme.shapes.medium,
-                shape = RoundedCornerShape(8.dp),
-                // modifier = Modifier.size(280.dp, 240.dp)
-                modifier = Modifier
-                    .padding(10.dp, 5.dp, 10.dp, 10.dp)
-                    .size(300.dp, 200.dp),
-                //set card elevation of the card
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 10.dp,
-                ),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFF8BC34A),
-                ),
-            ) {
-                Column(modifier = Modifier.clickable(onClick = { })) {
+            )
+            Spacer(modifier = Modifier.height(30.dp))
 
-                    Image(
-                        painter = painterResource(R.drawable.chat),
-                        contentDescription = "", // decorative
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .height(150.dp)
-                            .fillMaxWidth()
-                            .background(Color.White)
-                    )
-
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "CONSULTA",
-                            style = MaterialTheme.typography.titleMedium,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis
-                        )
-
-                        Spacer(modifier = Modifier.height(5.dp))
-
-                    }
+            IndexCard(
+                context.getString(R.string.index_chat),
+                painterResource(id = R.drawable.chat),
+                Color(context.getColor(R.color.theme)),
+                onClick = {
+                    navController.navigate(AppRoutes.CHAT_ROUTE)
                 }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            Card(
-                //shape = MaterialTheme.shapes.medium,
-                shape = RoundedCornerShape(8.dp),
-                // modifier = Modifier.size(280.dp, 240.dp)
-                modifier = Modifier
-                    .padding(10.dp, 5.dp, 10.dp, 10.dp)
-                    .size(300.dp, 200.dp),
-                //set card elevation of the card
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 10.dp,
-                ),
-                colors = CardDefaults.cardColors(
-                    containerColor = colorResource(id = R.color.theme),
-                ),
-            ) {
-                Column(modifier = Modifier.clickable(onClick = { })) {
+            )
+            Spacer(modifier = Modifier.height(30.dp))
 
-                    Image(
-                        painter = painterResource(R.drawable.search),
-                        contentDescription = "", // decorative
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .height(150.dp)
-                            .fillMaxWidth()
-                    )
-
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "PESQUISA",
-                            style = MaterialTheme.typography.titleMedium,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis
-                        )
-
-                        Spacer(modifier = Modifier.height(5.dp))
-                    }
+            IndexCard(
+                context.getString(R.string.index_search),
+                painterResource(id = R.drawable.search),
+                Color(context.getColor(R.color.green)),
+                onClick = {
+                    navController.navigate(AppRoutes.SEARCH_ROUTE)
                 }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
+            )
+            Spacer(modifier = Modifier.height(30.dp))
+
         }
     }
 

@@ -14,10 +14,7 @@ import br.com.fiap.eco_tech.mvvm.view_model.PostBoxViewModel
 
 @Composable
 fun PostBox(
-    title: String,
-    description: String,
-    context: Context,
-    postBoxViewModel: PostBoxViewModel
+    title: String, description: String, context: Context, postBoxViewModel: PostBoxViewModel
 ) {
 
     val dropDownOpen by postBoxViewModel.dropDownOpen.observeAsState(initial = false)
@@ -25,11 +22,11 @@ fun PostBox(
     Text(text = title)
     DefaultButton(
         modifier = Modifier,
+        textSize = 12,
         text = if (dropDownOpen)
                     context.getString(R.string.dropdown_hide)
-                else
-                    context.getString(R.string.dropdown_show),
-        textSize = 12
+               else
+                    context.getString(R.string.dropdown_show)
     ) {
         postBoxViewModel.onMenuOpenChanged(!dropDownOpen)
     }

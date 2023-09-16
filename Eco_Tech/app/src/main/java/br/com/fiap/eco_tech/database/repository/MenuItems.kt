@@ -8,27 +8,26 @@ import br.com.fiap.eco_tech.navigation.AppRoutes
 class MenuItems {
     companion object {
         fun listItems(context: Context): List<Menu> {
-            val routes = AppRoutes()
             return listOf(
                 Menu(
                     name = context.getString(R.string.menu_index),
-                    route = routes.getIndexRoute()
+                    route = AppRoutes.INDEX_ROUTE
                 ),
                 Menu(
                     name = context.getString(R.string.menu_blog),
-                    route = routes.getBlogRoute()
+                    route = AppRoutes.BLOG_ROUTE
                 ),
                 Menu(
                     name = context.getString(R.string.menu_chat),
-                    route = routes.getChatRoute()
+                    route = AppRoutes.CHAT_ROUTE
                 ),
                 Menu(
                     name = context.getString(R.string.menu_search),
-                    route = routes.getSearchRoute()
+                    route = AppRoutes.SEARCH_ROUTE
                 ),
                 Menu(
                     name = context.getString(R.string.menu_exit),
-                    route = routes.getLoginRoute()
+                    route = AppRoutes.LOGIN_ROUTE
                 )
             )
         }

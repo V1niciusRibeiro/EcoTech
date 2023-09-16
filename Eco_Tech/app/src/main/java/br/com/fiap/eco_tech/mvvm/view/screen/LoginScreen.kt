@@ -1,38 +1,31 @@
-package com.example.eco_tech.composes.screens
+package br.com.fiap.eco_tech.mvvm.view.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -40,139 +33,128 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import br.com.fiap.eco_tech.R
+import br.com.fiap.eco_tech.database.repository.UserRepository
 import br.com.fiap.eco_tech.mvvm.view.component.DefaultButton
 import br.com.fiap.eco_tech.mvvm.view.component.DefaultInput
+import br.com.fiap.eco_tech.mvvm.view_model.LoginScreenViewModel
+import br.com.fiap.eco_tech.navigation.AppRoutes
 
 
 @Composable
-fun LoginScreen(navcControler : NavController) {
+fun LoginScreen(loginScreenViewModel: LoginScreenViewModel, navController: NavController) {
 
-    var usuario by remember {
-        mutableStateOf("")
-    }
+    val context = LocalContext.current
+    val userDB = UserRepository(context)
+    val login by loginScreenViewModel.login.observeAsState(initial = "")
+    val password by loginScreenViewModel.password.observeAsState(initial = "")
 
-    var senha by remember {
-        mutableStateOf("")
-    }
-    Box(
-        modifier = Modifier.fillMaxSize()
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(context.getColor(R.color.theme)))
     ) {
+
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(45.dp)
         ) {
-            // ---- header ---------
+            Image(
+                modifier = Modifier.size(90.dp),
+                contentDescription = "Logo_EcoTech",
+                painter = painterResource(R.drawable.logo_ecotech)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                fontSize = 28.sp,
+                color = colorResource(id = R.color.white),
+                text = context.getString(R.string.app_name),
+                fontFamily = FontFamily(Font(R.font.garamond))
+            )
+        }
+
+        Card(
+            modifier = Modifier.fillMaxSize(),
+            shape = RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
+        ) {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceAround,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(250.dp)
-                    .background(Color(0xFF00A57B))
+                    .padding(horizontal = 16.dp)
+                    .fillMaxHeight()
             ) {
-                Spacer(modifier = Modifier.height(52.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.logo_ecotech),
-                    contentDescription = "Menino Lindo",
-                    modifier = Modifier
-                        .size(90.dp)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "EcoEat",
-                    color = colorResource(id = R.color.white),
-                    fontSize = 28.sp,
-                    fontFamily = FontFamily(Font(R.font.garamond))
-                )
-            }
-            // --- formulário
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                //    .padding(horizontal = 32.dp) Padding para deixar o card flutuante
-            ) {
-                //   Spacer(modifier = Modifier.height(8.dp))
-                Card(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .offset(y = -25.dp),
 
-                    shape = RoundedCornerShape(34.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                  //  elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                    //  border = BorderStroke(width = 2.dp, Color.White),
+                Column {
+                    Text(
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
+                        text = context.getString(R.string.login_welcome), fontSize = 24.sp,
+                        color = colorResource(id = R.color.theme),
+                        fontWeight = FontWeight.Bold,
+                    )
 
-                ) {
-                    Column(
-                        modifier = Modifier.padding(
-                            vertical = 16.dp,
-                            horizontal = 32.dp
-                        )
-                    ) {
-                        Text(
-                            text = "Faça seu Login",
-                            modifier = Modifier.fillMaxWidth(),
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = colorResource(id = R.color.theme),
-                            textAlign = TextAlign.Center
-                        )
-                        Spacer(modifier = Modifier.height(32.dp))
-                        DefaultInput(
-                            modifier = Modifier.fillMaxWidth(),
-                            label = "Login",
-                            placeholder = "Digite o Usuário",
-                            icon = Icons.Default.Email,
-                            iconDescription = "Login",
-                            value = "a",
-                            keyboardType = KeyboardType.Email,
-                            maxLines = 1,
-                            onValueChange = {
+                    Spacer(modifier = Modifier.height(22.dp))
 
-                            }
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        DefaultInput(
-                            modifier = Modifier.fillMaxWidth(),
-                            label = "Senha",
-                            placeholder = "Digite a Senha",
-                            icon = Icons.Default.Lock,
-                            iconDescription = "Senha",
-                            value = "a",
-                            keyboardType = KeyboardType.Password,
-                            maxLines = 1,
-                            onValueChange = {
-
-                            }
-                        )
-                        Spacer(modifier = Modifier.height(65.dp))
-                        DefaultButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(65.dp),
-                            text = "Entrar",
-                            textSize = 16
-                        ) {
-                            navcControler.navigate("index")
+                    DefaultInput(
+                        modifier = Modifier.fillMaxWidth(),
+                        label = context.getString(R.string.login_label),
+                        placeholder = context.getString(R.string.login_placeholder),
+                        icon = Icons.Default.Email,
+                        iconDescription = "Login",
+                        value = login,
+                        keyboardType = KeyboardType.Email,
+                        maxLines = 1,
+                        onValueChange = {
+                            loginScreenViewModel.onLoginChanged(it)
                         }
-                        Text(
-                            text = "Esqueci minha senha",
-                            modifier = Modifier
-                                .padding(bottom = 8.dp, end = 5.dp, top = 2.dp)
-                                .clickable {}
-                                .align(Alignment.End),
-                            fontSize = 17.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = Color(0xFF074D09)
-                        )
-                    }
+                    )
 
+                    Spacer(modifier = Modifier.height(18.dp))
 
+                    DefaultInput(
+                        modifier = Modifier.fillMaxWidth(),
+                        label = context.getString(R.string.password_label),
+                        placeholder = context.getString(R.string.password_placeholder),
+                        icon = Icons.Default.Lock,
+                        iconDescription = "Password",
+                        value = password,
+                        keyboardType = KeyboardType.Password,
+                        maxLines = 1,
+                        onValueChange = {
+                            loginScreenViewModel.onPasswordChanged(it)
+                        }
+                    )
+                }
+
+                Column {
+                    DefaultButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(65.dp),
+                        text = context.getString(R.string.btn_enter),
+                        textSize = 20,
+                        onClick = {
+                            navController.navigate(AppRoutes.INDEX_ROUTE)
+                        }
+                    )
+
+                    Text(
+                        text = context.getString(R.string.forgot_password),
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color(context.getColor(R.color.theme)),
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .align(Alignment.End)
+                            .clickable {}
+                    )
                 }
 
             }
@@ -182,8 +164,3 @@ fun LoginScreen(navcControler : NavController) {
 }
 
 
-@Preview(showSystemUi = true)
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen(rememberNavController())
-}

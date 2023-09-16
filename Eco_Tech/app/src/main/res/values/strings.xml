@@ -1,10 +1,23 @@
 <resources>
     <string name="app_name">EcoTech</string>
+    <string name="login_welcome">Welcome</string>
+    <string name="login_label">Login</string>
+    <string name="password_label">Password</string>
+    <string name="login_placeholder">Enter your Login</string>
+    <string name="password_placeholder">Type your Password</string>
+    <string name="login_error">Incorrect Login or Password!</string>
+    <string name="forgot_password">Forgot your Password?</string>
+    <string name="btn_enter">Enter</string>
     <string name="menu_index">Home</string>
     <string name="menu_blog">Blog</string>
     <string name="menu_chat">Chat</string>
     <string name="menu_search">Search</string>
     <string name="menu_exit">Exit</string>
+    <string name="index_title">Welcome to the Food Awareness Platform</string>
+    <string name="index_subtitle">Explore our content categories:</string>
+    <string name="index_blog">BLOG</string>
+    <string name="index_chat">CHAT</string>
+    <string name="index_search">SEARCH</string>
     <string name="dropdown_show">Show</string>
     <string name="dropdown_hide">Hide</string>
 </resources>
